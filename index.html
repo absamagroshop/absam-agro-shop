@@ -54,5 +54,35 @@
     </section>
   </main>
   <footer>© 2026 ABSAM AGRO SHOP</footer>
+ <script>
+  const piStatus = document.getElementById("pi-status");
+  const piButton = document.getElementById("pi-login");
+
+  if (typeof Pi !== "undefined") {
+    Pi.init({ version: "2.0", sandbox: true });
+  } else {
+    piStatus.textContent = "SDK Pi indisponible.";
+  }
+
+  piButton.addEventListener("click", async function () {
+    if (typeof Pi === "undefined") {
+      piStatus.textContent = "Ouvrez cette application dans Pi Browser.";
+      return;
+    }
+
+    piStatus.textContent = "Connexion en cours...";
+    try {
+      const auth = await Pi.authenticate(
+        ["username"],
+        function (payment) {
+          console.log("Paiement incomplet :", payment);
+        }
+      );
+      piStatus.textContent = "Bienvenue " + auth.user.username + " !";
+    } catch (error) {
+      piStatus.textContent = "Connexion échouée : " + (error.message || error);
+    }
+  });
+                            </script>
 </body>
 </html>
