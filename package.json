@@ -2,8 +2,9 @@
   "name": "absam-agro-shop",
   "version": "1.0.0",
   "description": "Plateforme de commerce en ligne ABSAM AGRO SHOP : produits agricoles, électroniques et services au Bénin.",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
+   "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
