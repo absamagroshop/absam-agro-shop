@@ -6,6 +6,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ABSAM AGRO SHOP</title>
   <style>
+   /* PANIER ABSAM AGRO SHOP */
+.panier {
+  background: #ffffff;
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 12px;
+  border: 2px solid #176b3a;
+}
+
+.panier h2 {
+  color: #176b3a;
+}
+
+.panier button {
+  background: #176b3a;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
    /* Affichage adapté aux téléphones */
 img {
   display: block;
@@ -181,6 +202,18 @@ href="https://wa.me/2290166121451?text=Bonjour%2C%20je%20souhaite%20demander%20u
 </a>
 
    </section>
+   <section id="panier" class="panier">
+  <h2>🛒 Mon panier ABSAM AGRO SHOP</h2>
+  <p>Retrouvez ici les produits que vous souhaitez commander.</p>
+
+  <div id="liste-panier">
+    <p>Votre panier est actuellement vide.</p>
+  </div>
+
+  <button type="button" onclick="commanderPanier()">
+    📲 Commander mon panier sur WhatsApp
+  </button>
+   </section>
     <section id="contact" class="card">
       <h2>Contact</h2>
       <p>Contactez notre équipe pour vos commandes et renseignements.</p>
@@ -218,5 +251,49 @@ href="https://wa.me/2290166121451?text=Bonjour%2C%20je%20souhaite%20demander%20u
     }
   });
                             </script>
+ <script>
+let panier = [];
+
+function ajouterAuPanier(produit) {
+  panier.push(produit);
+  afficherPanier();
+}
+
+function afficherPanier() {
+  const liste = document.getElementById("liste-panier");
+
+  if (panier.length === 0) {
+    liste.innerHTML = "<p>Votre panier est actuellement vide.</p>";
+    return;
+  }
+
+  liste.innerHTML = panier.map((produit, index) =>
+    `<p>${index + 1}. ${produit}
+    <button onclick="retirerDuPanier(${index})">❌</button></p>`
+  ).join("");
+}
+
+function retirerDuPanier(index) {
+  panier.splice(index, 1);
+  afficherPanier();
+}
+
+function commanderPanier() {
+  if (panier.length === 0) {
+    alert("Votre panier est vide.");
+    return;
+  }
+
+  const message = "Bonjour ABSAM AGRO SHOP, je souhaite commander :\n" +
+    panier.map((produit, index) =>
+      `${index + 1}. ${produit}`
+    ).join("\n");
+
+  window.open(
+    "https://wa.me/2290166121451?text=" + encodeURIComponent(message),
+    "_blank"
+  );
+}
+ </script>
 </body>
 </html>
