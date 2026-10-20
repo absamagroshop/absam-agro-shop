@@ -382,19 +382,41 @@ function retirerDuPanier(index) {
   afficherPanier();
 }
 
+
 function commanderPanier() {
   if (panier.length === 0) {
     alert("Votre panier est vide.");
     return;
   }
 
-  const message = "Bonjour ABSAM AGRO SHOP, je souhaite commander :\n" +
-    panier.map((produit, index) =>
-      `${index + 1}. ${produit}`
-    ).join("\n");
+  let totalFCFA = 0;
+  let totalPi = 0;
+
+  const details = panier.map((produit, index) => {
+    const fcfa = prixProduits[produit] || 0;
+    const pi = Number(prixPiProduits[produit] || 0);
+
+    totalFCFA += fcfa;
+    totalPi += pi;
+
+    return `${index + 1}. ${produit}
+Prix en Pi : ${pi.toFixed(8)} π
+Prix en FCFA : ${fcfa.toLocaleString("fr-FR")} FCFA`;
+  }).join("\n\n");
+
+  const message = `Bonjour ABSAM AGRO SHOP,
+je souhaite commander :
+
+${details}
+
+TOTAL EN PI : ${totalPi.toFixed(8)} π
+TOTAL EN FCFA : ${totalFCFA.toLocaleString("fr-FR")} FCFA
+
+Merci.`;
 
   window.open(
-    "https://wa.me/2290166121451?text=" + encodeURIComponent(message),
+    "https://wa.me/2290166121451?text=" +
+    encodeURIComponent(message),
     "_blank"
   );
 }
