@@ -353,6 +353,10 @@ const total = panier.reduce((somme, produit) => {
   return somme + (prixProduits[produit] || 0);
 }, 0);
 
+const totalPi = panier.reduce((somme, produit) => {
+  return somme + Number(prixPiProduits[produit] || 0);
+}, 0);
+ 
 liste.innerHTML = panier.map((produit, index) => `
   <p>
     
@@ -365,6 +369,9 @@ Prix en FCFA : ${(prixProduits[produit] || 0).toLocaleString("fr-FR")} FCFA
 `).join("");
 
 liste.innerHTML += `
+
+<h3>Total en Pi : ${totalPi.toFixed(8)} π</h3>
+  
   <h3>Total : ${total.toLocaleString("fr-FR")} FCFA</h3>
 `;
  
