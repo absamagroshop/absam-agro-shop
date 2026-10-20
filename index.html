@@ -317,7 +317,14 @@ href="https://wa.me/2290166121451?text=Bonjour%2C%20je%20souhaite%20demander%20u
                             </script>
  <script>
 let panier = [];
-
+ const prixProduits = {
+  "Écouteurs Bluetooth": 7000,
+  "Power Banks": 9333,
+  "Lampes solaires": 14000,
+  "Montres intelligentes": 11667,
+  "Chargeurs et câbles": 3267,
+  "Haut-parleurs Bluetooth": 16800
+};
 function ajouterAuPanier(produit) {
   panier.push(produit);
   afficherPanier();
@@ -331,10 +338,23 @@ function afficherPanier() {
     return;
   }
 
-  liste.innerHTML = panier.map((produit, index) =>
-    `<p>${index + 1}. ${produit}
-    <button onclick="retirerDuPanier(${index})">❌</button></p>`
-  ).join("");
+  
+const total = panier.reduce((somme, produit) => {
+  return somme + (prixProduits[produit] || 0);
+}, 0);
+
+liste.innerHTML = panier.map((produit, index) => `
+  <p>
+    ${index + 1}. ${produit} —
+    ${(prixProduits[produit] || 0).toLocaleString("fr-FR")} FCFA
+    <button onclick="retirerDuPanier(${index})">Retirer</button>
+  </p>
+`).join("");
+
+liste.innerHTML += `
+  <h3>Total : ${total.toLocaleString("fr-FR")} FCFA</h3>
+`;
+ 
 }
 
 function retirerDuPanier(index) {
