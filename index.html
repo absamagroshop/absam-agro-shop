@@ -325,6 +325,16 @@ let panier = [];
   "Chargeurs et câbles": 3267,
   "Haut-parleurs Bluetooth": 16800
 };
+  
+const prixPiProduits = {
+  "Écouteurs Bluetooth": "0.00004421",
+  "Power Banks": "0.00005895",
+  "Lampes solaires": "0.00008842",
+  "Montres intelligentes": "0.00007368",
+  "Chargeurs et câbles": "0.00002063",
+  "Haut-parleurs Bluetooth": "0.00010610"
+};
+  
 function ajouterAuPanier(produit) {
   panier.push(produit);
   afficherPanier();
@@ -345,8 +355,11 @@ const total = panier.reduce((somme, produit) => {
 
 liste.innerHTML = panier.map((produit, index) => `
   <p>
-    ${index + 1}. ${produit} —
-    ${(prixProduits[produit] || 0).toLocaleString("fr-FR")} FCFA
+    
+${index + 1}. ${produit}<br>
+Prix en Pi : ${prixPiProduits[produit] || "À confirmer"} π<br>
+Prix en FCFA : ${(prixProduits[produit] || 0).toLocaleString("fr-FR")} FCFA
+
     <button onclick="retirerDuPanier(${index})">Retirer</button>
   </p>
 `).join("");
